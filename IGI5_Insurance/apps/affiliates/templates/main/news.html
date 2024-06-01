@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+{% block title %}News{% endblock title %}
+{% block header %}News{% endblock header %}
+
+{% block content %}
+<ul>
+    {% for item in news %}
+        <p class="truncate">Title: {{ item.title }}</p>
+        <p class="truncate">Content: {{ item.content }}</p>
+        <p class="truncate">Created at: {{ item.created_at }}</p>
+        <hr>
+    {% endfor %}
+</ul>
+{% endblock content %}
+
