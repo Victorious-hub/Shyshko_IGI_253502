@@ -1,0 +1,36 @@
+{% extends "clients/client_base.html" %}
+{% block title %}Client Profile{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">Your policy</h1>
+                <ul>
+                    <p class="truncate">Client: {{ policy.contract.client }}</p>
+                    <p class="truncate">Insurance sum: {{ policy.insurance_sum }}</p>
+                    <p class="truncate">Price: {{ policy.price }}</p>
+                    <p class="truncate">Start date: {{ policy.start_date }}</p>
+                    <p class="truncate">End date: {{ policy.end_date }}</p>
+                </ul>
+                <form method="post">
+                    {% if messages %}
+                    <div class="container mt-4">
+                        {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="coupon">Coupon</label>
+                        <input type="text" class="form-control" id="coupon" name="coupon" placeholder="Enter coupon code">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirm and pay</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
