@@ -5,11 +5,11 @@
 {% block content %}
     <ul>
         {% for item in feedbacks %}
-            <p class="truncate">Client: {{ item.client.user }}</p>
-            <p class="truncate">Title: {{ item.title }}</p>
-            <p class="truncate">Description: {{ item.description }}</p>
-            <p class="truncate">Rating: {{ item.rating }}</p>
-            <p class="truncate">Created at: {{ item.created_at }}</p>
+            <p>Client: {{ item.client.user }}</p>
+            <p>Title: {{ item.title }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Rating: {{ item.rating }}</p>
+            <p>Created at: {{ item.created_at }}</p>
             <hr>
         {% endfor %}
     </ul>

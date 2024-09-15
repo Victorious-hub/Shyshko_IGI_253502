@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+{% block header %}Insurance types{% endblock header %}
+
+{% block content %}
+
+    <p>Insurance name: {{ insurance.name }}</p>
+    <p>Insurance description: {{ insurance.description }}</p>
+    <hr>
+    <b>Insurance objects</b>
+    {% for item in insurance_object_list %}
+        <p>Object name: {{ item.name }}</p>
+        <p>Object description: {{ item.description }}</p>
+        <strong>Insurance risks</strong>
+        {% for it in item.insurance_objects.all %}
+            <p>Risk name: {{ it.name }}</p>
+            <p>Risk description: {{ it.description }}</p>
+            <a href="{% url 'contract_create' insurance.id%}">Add Contract to cart</a>
+        {% endfor %}
+    {% endfor %}
+    <hr>
+{% endblock content %}

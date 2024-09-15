@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+{% block header %}About Company{% endblock header %}
+
+{% block content %}
+<ul>
+    {% for item in company %}
+        <p>Company information: {{ item.information }}</p>
+    {% endfor %}
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/4TQj6fbq0oI?si=zbuwfncRV7A_zgoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</ul>
+{% endblock content %}

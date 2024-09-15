@@ -4,8 +4,6 @@ import io
 import os
 from urllib import parse
 import requests
-from django.conf import settings
-import pandas as pd
 import matplotlib.pyplot as plt
 from django.db.models import Count
 from apps.users.models import Affiliate, Client
@@ -49,34 +47,32 @@ def get_age(name: str):
 
 
 def plot_policy_sale():
-  confirmed_policies = Policy.objects.filter(contract__status=4)
-  policy_counts = confirmed_policies.values('agent__affiliate').annotate(count=Count('id'))
+    confirmed_policies = Policy.objects.filter(contract__status=4)
+    policy_counts = confirmed_policies.values('agent__affiliate').annotate(count=Count('id'))
 
-  affiliates = [pc['agent__affiliate'] for pc in policy_counts]
-  counts = [pc['count'] for pc in policy_counts]
+    affiliates = [pc['agent__affiliate'] for pc in policy_counts]
+    counts = [pc['count'] for pc in policy_counts]
 
-  plt.bar([get_object(Affiliate, id=affiliate).name for affiliate in affiliates], counts)
-  plt.xticks(rotation=30, ha='right')  
+    plt.bar([get_object(Affiliate, id=affiliate).name for affiliate in affiliates], counts)
+    plt.xticks(rotation=30, ha='right')  
 
-  bar_label([get_object(Affiliate, id=affiliate).name for affiliate in affiliates], counts)
+    bar_label([get_object(Affiliate, id=affiliate).name for affiliate in affiliates], counts)
 
-  plt.xlabel('Affiliate Name')
-  plt.ylabel('Policy Count')
-  plt.title(f"Confirmed Policies by Affiliates")
+    plt.xlabel('Affiliate Name')
+    plt.ylabel('Policy Count')
+    plt.title(f"Confirmed Policies by Affiliates")
 
-  fig = plt.gcf()
-  buf = io.BytesIO()
-  fig.savefig(buf, format='png')
-  buf.seek(0)
-  string = base64.b64encode(buf.read())
-  url = parse.quote(string)
-  return url
+    fig = plt.gcf()
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    url = parse.quote(string)
+    return url
 
 def bar_label(x, y):
-  for i, value in enumerate(y):
-    plt.text(x[i], value + 0.1, str(value), ha='center') 
-
-
+    for i, value in enumerate(y):
+        plt.text(x[i], value + 0.1, str(value), ha='center') 
 
 
 def policy_month_sale():
@@ -108,4 +104,3 @@ def policy_month_sale():
     string = base64.b64encode(buf.read())
     url = parse.quote(string)
     return url
-    

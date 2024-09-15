@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+{% block title %}News{% endblock title %}
+{% block header %}News{% endblock header %}
+
+{% block content %}
+<ul>
+    {% if news.image%}
+        <img src="{{ news.image.url}}"alt="..." />
+    {% endif %}
+    <p>Title: {{ news.title }}</p>
+    <p>Created at: {{ news.created_at }}</p>
+    <p>Description: {{ news.content}}</p>
+    <hr>
+</ul>
+{% endblock content %}

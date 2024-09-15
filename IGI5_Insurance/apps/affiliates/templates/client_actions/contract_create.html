@@ -2,33 +2,51 @@
 {% block title %}Client Profile{% endblock title %}
 
 {% block content %}
-  <div class="d-flex justify-content-center align-items-center full-height">
-    <div class="form-box">
-      {% if messages %}
-          <div class="messages">
-              {% for message in messages %}
-                  <div class="alert alert-danger" role="alert">
-                      {{ message }}
-                  </div>
-              {% endfor %}
-          </div>
-      {% endif %}
-      <form method="POST" action="{% url 'contract_create' user.id%}">
-          {% csrf_token %}
-          <h1>Create Contract</h1>
-          {% for field in form %}
-              <div class="form-group">
-                  {{ field.label_tag }}
-                  {{ field }}
-                  {% if field.errors %}
-                      <div class="invalid-feedback d-inline-block ml-2">
-                          {{ field.errors|first }}
-                      </div>
-                  {% endif %}
-              </div>
-          {% endfor %}
-          <input class="btn btn-success" type="submit" value="Submit" />
-      </form>
+<div class="container">  
+    <form method="POST" action="{% url 'contract_create' user.id%}">
+        {% csrf_token %}
+        <h1>Create Contract</h1>
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="invalid-feedback d-inline-block ml-2">
+                        {{ field.errors|first }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Submit" />
+    </form>
     </div>
-  </div>
+</div>
+
+<style>
+    /* Add styles to your CSS file or within this block */
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 50vh;  /* Optional: Set minimum height for full viewport centering */
+    }
+
+    .form-wrapper {
+        background-color: #fff;  /* Optional: Set background color */
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Optional: Add a subtle shadow */
+    }
+
+    .form-group {
+        margin-bottom: 35px;
+    }
+
+    .form-control {  /* Assuming you're using Bootstrap classes for fields */
+        width: 100%;  /* Increase field width */
+        padding: 10px;
+        font-size: 16px;  /* Optional: Increase font size */
+    }
+
+</style>
 {% endblock content %}

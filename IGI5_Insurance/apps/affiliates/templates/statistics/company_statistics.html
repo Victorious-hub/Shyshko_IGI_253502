@@ -3,12 +3,68 @@
 {% block header %}Statistics{% endblock header %}
 
 {% block content %}
-    <p>Total clients:</p>
-    {% for item in total_clients %}
-        <p>{{ item }}</p>
-    {% endfor %}
-    <p>Total policy price: {{ total_policy_price }}</p>
-    <p>Client age median: {{ client_median }}</p>
-    <p>Client age mean: {{ client_mean }}</p>
-    <p>Client age mode: {{ client_mode }}</p>
+    <h2>All Clients</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Balance</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in total_clients %}
+            <tr>
+                <td>
+                    {% if client.user.profile_image %}
+                        <img src="{{ client.user.profile_image.url}}" class="img1" alt="..." />
+                    {% endif %}
+                </td>
+                <td>{{ client.user.email }}</td>
+                <td>{{ client.user.first_name }}</td>
+                <td>{{ client.user.last_name }}</td>
+                <td>{{ client.user.date_birth }}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.balance }}</td>
+                <td>{{ client.user.age }}</td>
+                <td>{{ client.gender }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Other Statistics</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Statistic</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Total Policy Price</td>
+                <td>{{ total_policy_price }}</td>
+            </tr>
+            <tr>
+                <td>Client Age Median</td>
+                <td>{{ client_median }}</td>
+            </tr>
+            <tr>
+                <td>Client Age Mean</td>
+                <td>{{ client_mean }}</td>
+            </tr>
+            <tr>
+                <td>Client Age Mode</td>
+                <td>{{ client_mode }}</td>
+            </tr>
+        </tbody>
+    </table>
 {% endblock content %}

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "igi5-insurance"
+version = "0.1.0"
+description = ""
+authors = ["Shyskov <shyskov@inbox.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1"
+django-debug-toolbar = "^4.4.6"
+django-jazzmin = "^3.0.0"
+pillow = "^10.4.0"
+tzlocal = "^5.2"
+requests = "^2.32.3"
+pandas = "^2.2.2"
+matplotlib = "^3.9.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

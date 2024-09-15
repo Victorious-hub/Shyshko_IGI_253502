@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% block header %}Insurance types{% endblock header %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="insurance-type">Выберите тип страхования:</label>
+        <select id="insurance-type" name="insurance_type">
+            <option value="">Все</option>
+            <option value="Medical Insurance">Medical Insurance</option>
+            <option value="Auto Insurance">Auto Insurance</option>
+            <option value="Home Insurance">Home Insurance</option>
+            <option value="Life Insurance">Life Insurance</option>
+            <option value="Travel Insurance">Travel Insurance</option>
+            <option value="Business Insurance">Business Insurance</option>
+        </select>
+        <button type="submit">Фильтр</button>
+    </form>
+
+    <ul>
+        {% for item in insurance %}
+            {% if item.image %}
+                <img src="{{ item.image.url}}" alt="..." width="200px" height="150px"/>
+            {% endif %}
+            <p>Insurance name: {{ item.name }}</p>
+            <p>Insurance description: {{ item.description }}</p>
+            <a href="{% url 'insurance_catalog_detail' item.id%}">Details</a>
+            <hr>
+        {% endfor %}
+    </ul>
+{% endblock content %}

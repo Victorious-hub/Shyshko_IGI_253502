@@ -1,16 +1,12 @@
 import os
 from pathlib import Path
-import environ # type: ignore
-
-env = environ.Env()
-environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-t$if7u3$amts9&=q-dbvmk%p@g0$hyz3)+2-fzpy6vi@1a()-z"
-
+from apps.affiliates.middlewares import TimezoneMiddleware
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -22,16 +18,8 @@ LOCAL_APPS = [
     'apps.users.apps.UsersConfig',
     'apps.affiliates.apps.AffiliatesConfig',
 ]
-
-# Third party applications
-THIRD_PARTY_APPS = [
-    'debug_toolbar',
-    'jazzmin',
-]
-
 # Installed apps
 INSTALLED_APPS = [
-    *THIRD_PARTY_APPS,
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,12 +29,9 @@ INSTALLED_APPS = [
     *LOCAL_APPS,
 ]
 
-if DEBUG:
-    INTERNAL_IPS = type(str('c'), (), {'__contains__': lambda *a: True})()
 
 # middleware
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +39,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "apps.affiliates.middlewares.TimezoneMiddleware"
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -80,23 +66,10 @@ ASGI_APPLICATION = 'config.asgi.application'
 # Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'user-name',
-        'HOST': 'db',
-        'PORT': 5432,
-        'PASSWORD': 'strong-password'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 2525
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'shyskov@.ru'
-EMAIL_HOST_PASSWORD = 'app_password'
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -115,42 +88,28 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGGING = {
-    'version':1,
-    'disable_exiting_logger':False,
-    'formatters':{
-        "standard":{
-            "format" : "%(asctime)s %(levelname)s %(name)s %(message)s"
-        }
-    },
-    'handlers':{
-        'console': {
-            'class' : 'logging.StreamHandler',
-            'formatter': "standard",
-        },
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
         'file': {
-            'class' : 'logging.FileHandler',
-            'formatter': "standard",
-            'filename' : "info.log"
-        }
-    },
-    'loggers':{
-        'main':{
-            'handlers' : ['console', 'file'],
-            'level' : 'DEBUG',
-            'propagate' : True,
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'django.log',
         },
-        'affiliates':{
-            'handlers' : ['console', 'file'],
-            'level' : 'DEBUG',
-            'propagate' : True,
-        }
-    }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }
 
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -163,6 +122,7 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 MEDIA_URL = '/media/'
 

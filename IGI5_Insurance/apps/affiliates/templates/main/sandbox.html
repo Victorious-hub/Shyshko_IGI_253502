@@ -1,0 +1,334 @@
+<!--Базовый HTML-код-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Sample of HTML</title>
+</head>
+<style>
+    .highlight {
+        background-color: yellow;
+    }
+</style>
+<body>
+    <header>
+        <h1>Мой веб-сайт</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <article>
+            <h2>Статья 1</h2>
+            <p>Это первый абзац статьи.</p>
+            <p>Это второй абзац статьи.</p>
+            <aside>
+                <h3>Дополнительная информация</h3>
+                <p>Здесь может быть дополнительный контент.</p>
+            </aside>
+        </article>
+    
+        <section>
+            <h2>Раздел 2</h2>
+            <p>Это основной контент второго раздела.</p>
+            <details>
+                <summary>Дополнительные детали</summary>
+                <p>Скрытый контент.</p>
+            </details>
+        </section>
+            <h1>Text h1</h1>
+            <h2>Text h2</h2>
+            <h3>Text h3</h3>
+            <h4>Text h4</h4>
+            <h5>Text h5</h5>
+            <h6>Text h6</h6>
+            <p>Simple text</p>
+            <br>
+            <a href="https://youtube.com">Youtube</a>
+            <hr>
+
+            <!--Форматирование-->
+
+            <abbr>HTML</abbr>
+            <address>My phone number: +3752951111111</address>
+            <b>sub-bold text</b>
+            <bdi>hahaahah</bdi>
+            <bdo>It's bdo text tag</bdo>
+            <blockquote>
+                <p>Как говорил Альберт Эйнштейн: "Все мы гении. Но если вы судите рыбу по ее способности лазать по деревьям, она проживет всю жизнь, считая себя глупой."</p>
+                <cite>Альберт Эйнштейн</cite>
+            </blockquote>
+            
+            <p>Как сказал автор, <q>это был прекрасный день</q>.</p>
+            <p>Гипертекстовая разметка языков (<dfn>HTML</dfn>) - это стандартный язык разметки для создания веб-страниц.</p>
+            <p>Первоначально было написано: <del>Это неправильно.</del> Теперь мы знаем, что это <ins>правильно</ins>.</p>
+            <p>Чтобы вывести "Hello, world!" на экран, используйте следующий код: <code>console.log("Hello, world!");</code></p>
+            
+            <p>Этот текст <em>подчеркнут</em>.</p>
+
+            <p><ins>Этот текст был добавлен позже.</ins></p>
+            <p>Чтобы сохранить файл, нажмите <kbd>Ctrl+S</kbd>.</p>
+            <p><mark>Этот текст выделен, как будто его выбрали.</mark></p>
+            <meter value="0.75" min="0" max="1">Прогресс: 75%</meter>
+            <pre>
+                Это предварительно отформатированный текст.
+                Он сохраняет все пробелы и переводы строк.
+            </pre>
+            <progress value="30" max="100">Загрузка...</progress>
+            <p>Как сказал автор: <q>Это очень интересно!</q></p>
+            <ruby>漢<rt>かん</rt></ruby> <p><s>Это утверждение было ошибочным.</s></p>
+            <p>Выход программы: <samp>Результат операции: 123</samp></p>
+            <p>Это <small>мелкий</small> текст.</p>
+
+            <p>Это <var>x</var> и <var>y</var> - это две переменные.</p>
+            <p>Сегодня <time datetime="2023-11-28">28 ноября 2023</time> года.</p>
+            <p>Этот текст <u>подчеркнут</u> для выделения.</p>
+            <p><code>Это пример кода.</code></p>
+            <p><sub>Нижний индекс</sub>, а это <sup>верхний индекс</sup>.</p>
+            <p>HTML5 - это <abbr title="HyperText Markup Language">HTML</abbr>.</p>
+            <address>Контакты: <a href="mailto:example@example.com">example@example.com</a></address>
+            <p>Пример шаблона: <template>Hello, <span id="name"></span>!</template></p>
+
+            <!--Формы и ввод-->
+            <form>
+                <fieldset>
+                    <legend>Личные данные</legend>
+                        <label for="name">Имя:</label>
+                        <input type="text" id="name" name="name"><br>
+
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email"><br>
+
+                        <label for="password">Пароль:</label>   
+
+                        <input type="password" id="password" name="password"><br>   
+
+
+                        <label for="number">Число:</label>
+                        <input type="number" id="number" name="number"><br>
+
+                        <label for="date">Дата:</label>
+                        <input type="date" id="date" name="date"><br>
+
+                        <label for="datetime-local">Дата и время:</label>
+                        <input type="datetime-local" id="datetime-local" name="datetime-local"><br>
+
+                        <label for="month">Месяц:</label>
+                        <input type="month" id="month" name="month"><br>
+
+                        <label for="time">Время:</label>
+                        <input type="time" id="time" name="time"><br>
+
+                        <label for="week">Неделя:</label>
+                        <input type="week" id="week" name="week"><br>
+
+                        <label for="url">URL:</label>
+                        <input type="url" id="url" name="url"><br>
+
+                        <label for="tel">Телефон:</label>
+                        <input type="tel" id="tel" name="tel"><br>
+
+                        <label for="color">Цвет:</label>
+                        <input type="color" id="color" name="color"><br>
+
+                        <label for="search">Поиск:</label>
+                        <input type="search" id="search" name="search"><br>
+
+                        <label for="file">Файл:</label>
+                        <input type="file" id="file" name="file"><br>
+
+                        <label for="range">Диапазон:</label>
+                        <input type="range" id="range" name="range" min="0" max="100"><br>
+
+                        <label for="radio">Радиокнопка:</label>
+                        <input type="radio" id="radio1" name="radio" value="option1">
+                        <label for="radio1">Вариант 1</label>
+                        <input type="radio" id="radio2" name="radio" value="option2">
+                        <label for="radio2">Вариант 2</label><br>
+
+                        <label for="checkbox">Флажок:</label>
+                        <input type="checkbox" id="checkbox" name="checkbox">
+                        <label for="checkbox">Вариант</label><br>
+                </fieldset>
+                <fieldset>
+                    <legend>Предпочтения</legend>
+
+                    <label>Любимый цвет:</label>
+                    <select name="colors">
+                        <optgroup label="Холодные цвета">
+                            <option value="blue">Синий</option>
+                            <option value="green">Зеленый</option>
+                        </optgroup>
+                        <optgroup label="Теплые цвета">
+                            <option value="red">Красный</option>
+                            <option value="yellow">Желтый</option>
+                        </optgroup>
+                    </select><br>
+                    <label>Комментарии:</label><br>
+                    <textarea name="comments" rows="5" cols="30"></textarea><br>
+                </fieldset>
+                <button type="submit">Отправить</button>
+            </form>
+
+            <datalist id="cars">
+                <option value="Volvo">
+                <option value="Saab">
+                <option value="Mercedes">
+            </datalist>
+            <input list="cars">
+            <!--Рамки-->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/4TQj6fbq0oI?si=zbuwfncRV7A_zgoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+            <!--Изображения-->
+            <figure>
+                <img src="ads.jpg" alt="Описание изображения">
+                <figcaption>Мое прекрасное изображение</figcaption>
+                </figure>
+                
+                <img src="ads.jpg" alt="Карта" usemap="#image-map">
+                <map name="image-map">
+                    <area shape="rect" coords="0,0,80,80" href="link1.html" alt="Ссылка на первую область">
+                    <area shape="circle" coords="150,100,40" href="link2.html" alt="Ссылка на вторую область">
+                </map>
+                
+                <canvas id="myCanvas" width="200" height="100"></canvas>
+                <script>
+                    const canvas = document.getElementById('myCanvas');
+                    const ctx = canvas.getContext('2d');   
+                
+                    ctx.fillStyle = 'blue';
+                    ctx.fillRect(0,   
+                0, 100, 50);
+                </script>
+                
+                <picture>
+                    <source media="(min-width: 600px)" srcset="large.jpg">
+                    <source media="(min-width: 400px)" srcset="medium.jpg">
+                    <img src="small.jpg" alt="Изображение">   
+                
+                </picture>
+                
+                <svg width="200" height="100">
+                    <circle cx="100" cy="50" r="40" fill="red" />
+                </svg>
+
+                <!--Списки-->
+                <h2>Неупорядоченный список</h2>
+                <ul>
+                    <li>Яблоко</li>
+                    <li>Банан</li>
+                    <li>Груша</li>
+                </ul>
+
+                <h2>Упорядоченный список</h2>
+                <ol>
+                    <li>Первый пункт</li>
+                    <li>Второй пункт</li>
+                    <li>Третий пункт</li>
+                </ol>
+
+                <h2>Список описаний</h2>
+                <dl>
+                    <dt>HTML</dt>
+                    <dd>Язык разметки гипертекста</dd>
+                    <dt>CSS</dt>
+                    <dd>Язык стилевых таблиц</dd>
+                </dl>
+
+                <h2>Всплывающее меню</h2>
+                <menu>
+                    <menuitem label="Открыть"></menuitem>
+                    <menuitem label="Сохранить"></menuitem>
+                    <menuitem label="Выход"></menuitem>
+                </menu>
+
+                <h2>Простая таблица</h2>
+                <table border="1">
+                    <tr>
+                        <th>Имя</th>
+                        <th>Возраст</th>
+                        <th>Город</th>
+                    </tr>
+                    <tr>
+                        <td>Иван</td>
+                        <td>25</td>
+                        <td>Москва</td>
+                    </tr>
+                    <tr>
+                        <td>Мария</td>
+                        <td>30</td>
+                        <td>Санкт-Петербург</td>
+                    </tr>
+                </table>
+
+                <h2>Таблица с заголовком и подвалами</h2>
+                <table>
+                    <caption>Список продуктов</caption>
+                    <thead>
+                        <tr>
+                            <th>Продукт</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Яблоки</td>
+                            <td>50 руб.</td>
+                            <td>2 кг</td>
+                        </tr>
+                        <tr>
+                            <td>Бананы</td>
+                            <td>70 руб.</td>
+                            <td>1 кг</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Итого: 120 руб.</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h2>Таблица с группировкой столбцов</h2>
+                <table>
+                    <colgroup>
+                        <col style="background-color: lightblue;">
+                        <col span="2" style="background-color: lightgray;">
+                    </colgroup>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Возраст</th>
+                        <th>Город</th>
+                    </tr>
+                </table>
+        
+        <noscript>
+            У вас отключен JavaScript. Некоторые функции сайта могут быть недоступны.
+        </noscript>
+        
+        <embed src="document.pdf" type="application/pdf" width="500" height="300">
+        
+        <object data="video.mp4" type="video/mp4" width="320" height="240">
+            <param name="autoplay" value="true">
+        </object>
+    </main>
+    <footer>
+        <p>&copy; 2023 Мой сайт</p>
+    </footer>
+    
+    <dialog id="myDialog">
+        <h2>Диалоговое окно</h2>
+        <p>Это содержимое диалогового окна.</p>
+    </dialog>
+    <button onclick="document.getElementById('myDialog').showModal()">Открыть диалог</button>
+    
+    <p>Сегодня <time datetime="2023-11-22">22 ноября 2023</time>.</p>
+</body>
+<script>
+    document.body.style.backgroundColor = "lightblue";
+</script>
+</html>

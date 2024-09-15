@@ -1,3 +1,6 @@
+import calendar
+from datetime import datetime
+from functools import reduce
 import logging
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
@@ -6,8 +9,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-
-from .utils import get_user_time
+from django.utils import timezone
+import pytz
 from .decorators import agent_required, client_required
 from django.utils.decorators import method_decorator
 from .models import Feedback
@@ -86,21 +89,29 @@ class AuthenticateView(View):
 
 @method_decorator(client_required, name='dispatch')
 class ClientProfileView(View):
-    # permission_required = 'users.change_client'
     template_name = 'clients/client_profile.html'
     
     def get(self, request, pk):
         client = client_get(pk)
-        user_time_data = get_user_time()
-        user_timezone = user_time_data["user_timezone"]
-        current_date_formatted = user_time_data["current_date_formatted"]
-        calendar_text = user_time_data["calendar_text"]
+        local_time = timezone.localtime(timezone.now())
+        utc_time = timezone.now().strftime('%d-%m-%Y %H:%M:%S')
+        tz = timezone.get_current_timezone()
+        current_datetime = datetime.now()
+        text_calendar = calendar.TextCalendar().formatmonth(
+            current_datetime.year,
+            current_datetime.month).split('\n')
+        width = len(text_calendar[1])
+        text_calendar[0] += ''*(width-len(text_calendar[0]))
+        text_calendar[-2] += ''*(width-len(text_calendar[-2]))
+        text_calendar = '\n' + reduce(lambda x, y: x + '\n' + y, text_calendar)
+        
         user_logger.info(f"Client data: {client.user.first_name}-{client.user.last_name}")
         return render(request, self.template_name, context={
             'client': client, 
-            'user_timezone': user_timezone,
-            'current_date_formatted': current_date_formatted,
-            'calendar_text': calendar_text
+            'user_timezone': utc_time,
+            'current_date_formatted': local_time.strftime('%d-%m-%Y %H:%M:%S'),
+            'calendar_text': text_calendar,
+            'local_tz': tz
         })
     
 
@@ -110,16 +121,26 @@ class AgentProfileView(View):
     
     def get(self, request, pk):
         agent = agent_get(pk)
-        user_time_data = get_user_time()
-        user_timezone = user_time_data["user_timezone"]
-        current_date_formatted = user_time_data["current_date_formatted"]
-        calendar_text = user_time_data["calendar_text"]
-        user_logger.info(f"Client data: {agent.user.first_name}-{agent.user.last_name}")
+
+        local_time = timezone.localtime(timezone.now())
+        utc_time = timezone.now().strftime('%d-%m-%Y %H:%M:%S')
+        tz = timezone.get_current_timezone()
+        current_datetime = datetime.now()
+        text_calendar = calendar.TextCalendar().formatmonth(
+            current_datetime.year,
+            current_datetime.month).split('\n')
+        width = len(text_calendar[1])
+        text_calendar[0] += ''*(width-len(text_calendar[0]))
+        text_calendar[-2] += ''*(width-len(text_calendar[-2]))
+        text_calendar = '\n' + reduce(lambda x, y: x + '\n' + y, text_calendar)
+
+
         return render(request, self.template_name, context={
             'agent': agent,
-            'user_timezone': user_timezone,
-            'current_date_formatted': current_date_formatted,
-            'calendar_text': calendar_text
+            'user_timezone': local_time,
+            'current_date_formatted': utc_time,
+            'calendar_text': text_calendar,
+            'local_tz': tz
         })
 
 class LogoutView(View):

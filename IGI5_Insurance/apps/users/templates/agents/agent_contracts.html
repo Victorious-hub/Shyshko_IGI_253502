@@ -5,11 +5,11 @@
 {% block content %}
     <ul>
         {% for item in contracts %}
-            <p class="truncate">Client: {{ item.contract.client }}</p>
-            <p class="truncate">Insurance type: {{ item.contract.insurance_type }}</p>
-            <p class="truncate">Insurance sum: {{ item.insurance_sum }}</p>
-            <p class="truncate">Start date: {{ item.start_date }}</p>
-            <p class="truncate">End_date: {{ item.end_date }}</p>
+            <p>Client: {{ item.contract.client }}</p>
+            <p>Insurance type: {{ item.contract.insurance_type }}</p>
+            <p>Insurance sum: {{ item.insurance_sum }}</p>
+            <p>Start date: {{ item.start_date }}</p>
+            <p>End_date: {{ item.end_date }}</p>
             <hr>
         {% endfor %}
     </ul>

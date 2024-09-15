@@ -4,67 +4,69 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hello, world!</title>
+    <title>Profile</title>
   </head>
   <style>
-    .navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #000;
-    padding: 10px;
-}
-
-.navbar-nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 100%;
-    list-style-type: none;
-    padding: 0;
-}
-
-.navbar-nav li {
-    margin: 0 10px;
-}
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
 </style>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li>
-                <a  href="{% url 'agent_profile' user.id%}">Your Profile</a>
-            </li>
-            <li class="nav-item mr-3">
+    <header>
+      <hgroup>
+          <h1>Agent profile</h1>
+      </hgroup>
+    </header>
+    <nav>
+      <div>
+          <ul style="display: flex; list-style: none; padding: 0;">
+            <li style="margin-right: 10px;">
               <a href="{% url 'client_contract_list' user.id%}">Affiliate contracts</a>
             </li>
-            <li class="nav-item mr-3">
+            <li style="margin-right: 10px;">
               <a  href="{% url 'logout' %}">Logout</a>
             </li>
-            <li class="nav-item mr-3">
+            <li style="margin-right: 10px;">
               <a href="{% url 'change_password' user.id%}">Change password</a>
             </li>
-            <li class="nav-item mr-3">
+            <li style="margin-right: 10px;">
               <a href="{% url 'agent_update' user.id%}">Update Data</a>
             </li>
-            <li class="nav-item mr-3">
+            <li style="margin-right: 10px;">
               <a href="{% url 'agent_contracts' user.id%}">Contract list</a>
             </li>
-            <li class="nav-item mr-3">
+            <li style="margin-right: 10px;">
               <a href="{% url 'main' %}">Back to main</a>
             </li>
           </ul>
       </div>
   </nav>
 
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6 box">
-            <h1>{% block header %}{% endblock header %}</h1>
-            <div>{% block content%}{% endblock content %}</div>
-        </div>
-      </div>
-    </div>
+  <main>
+    <section>
+        <h1>
+            {% block header %}{% endblock header %}
+        </h1>
+        <section>
+            {% block content%}{% endblock content %}
+        </section>
+    </section>
+  </main>
+
+  <footer>
+      <span>Powered by Victor Shyshko. All rights reserverd. 2024</span>
+      <ul style="list-style: none; padding: 0;">  <li><a href="https://github.com/Victorious-hub">Github repo</a></li>
+          <li><a href="https://www.linkedin.com/in/victor-shyshko-205a04274/">LinkedIn repo</a></li>
+      </ul>
+      <p>Privacy Policy: Your privacy is important to us. We do not share your personal information with third parties.</p>
+  </footer>
+
   </body>
+  <script type="text/javascript">
+    document.cookie = 'timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+  </script>
 </html>

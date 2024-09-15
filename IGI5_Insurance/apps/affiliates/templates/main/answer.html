@@ -1,0 +1,8 @@
+
+{% extends "main/base.html" %}
+{% block title %}Answer{% endblock title %}
+
+{% block content %}
+    <p>{{ answer.text }}</p>
+    <p>{{ answer.created_at }}</p>
+{% endblock content %}

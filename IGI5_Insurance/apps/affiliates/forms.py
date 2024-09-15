@@ -11,6 +11,12 @@ class ContractForm(forms.ModelForm):
         model = Contract
         fields = ('insurance_type', 'affiliate', 'insurance_object', 'insurance_risk',)
     
+    # def __init__(self, *args, **kwargs):
+    #     insurance = kwargs.get('insurance_type')
+    #     if insurance:
+    #         self.initial.update({
+    #             'insurance_type': insurance,
+    #         })
 
 class PolicyForm(forms.ModelForm):
     class Meta:

@@ -5,11 +5,18 @@
 {% block content %}
 <ul>
     {% for item in news %}
-        <p class="truncate">Title: {{ item.title }}</p>
-        <p class="truncate">Content: {{ item.content }}</p>
-        <p class="truncate">Created at: {{ item.created_at }}</p>
+        {% if item.image%}
+            <img src="{{ item.image.url}}"alt="..." />
+        {% endif %}
+
+        <p>Title: {{ item.title }}</p>
+        <p>Description: {{ item.content | safe | truncatewords:"50"|linebreaks }}</p> 
+        <p>Created at: {{ item.created_at }}</p>
+        
+        {% if item.content|length > 50 %}  
+            <a href="{% url 'news_detail' item.id %}">Read More</a>
+        {% endif %}
         <hr>
     {% endfor %}
 </ul>
 {% endblock content %}
-

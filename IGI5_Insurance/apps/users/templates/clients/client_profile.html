@@ -6,7 +6,7 @@
   <form method="get" action="" enctype='multipart/form-data' >
       <ul>
           {% if client.user.profile_image %}
-            <img src="{{ client.user.profile_image.url}}" class="img1" alt="..." />
+            <img src="{{ client.user.profile_image.url}}" alt="..." />
           {% endif %}
               <li>Email: {{ client.user.email }}</li>
               <li>First Name: {{ client.user.first_name }}</li>
@@ -21,7 +21,9 @@
               <li>Last Date Updated: {{ client.user.updated_at }}</li>
               <p>Current timezone: {{user_timezone}}</p>
               <p>Current date: {{current_date_formatted}}</p>
-              <p>Calendar?: {{calendar_text}}</p>
+              <p>local_tz: {{local_tz}}</p>
+              <pre>{{calendar_text}}</pre>
+
       </ul>
   </form>
 {% endblock content %}

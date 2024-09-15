@@ -1,3 +1,6 @@
+import calendar
+from django.utils import timezone
+import pytz
 import logging
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -7,7 +10,7 @@ from apps.users.models import Agent
 from apps.users.utils import get_object
 
 from .decorators import agent_required, client_required, superuser_required
-from .models import Answer, Company, Contract, Coupon, News
+from .models import Answer, Company, Contract, Coupon, InsuranceObject, InsuranceRisk, InsuranceType, News, Question
 from .forms import ContractForm, PolicyForm
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
@@ -17,11 +20,17 @@ from django.db.models import Q
 from .selectors import (
     affiliate_list,
     feedback_list,
+    get_answer,
     get_client_contract,
     get_client_contracts,
     get_client_policy,
-    get_contracts, 
-    incurance_list, 
+    get_company_detail,
+    get_contracts,
+    get_news, 
+    incurance_list,
+    list_active_coupons,
+    list_affiliate_employee,
+    list_news, 
     vacancy_list
 )
 
@@ -34,7 +43,6 @@ from .utils import (
     get_cat_info, 
     plot_policy_sale, 
     policy_comleted_list_price, 
-    policy_month_sale
 )
 
 
@@ -78,16 +86,19 @@ class ClientPolicyDetail(View):
         return render(request, self.template_name, context={'policy': policy})
 
 
-class BaseView(TemplateView):
+class MainView(View):
     affiliate_logger.info(f"Main page")
-    template_name = 'main/base.html'
-
-
-class CompanyDetailView(View):
-    template_name = 'main/company.html'
+    template_name = 'main/main.html'
 
     def get(self, request):
-        company = Company.objects.all()
+        news = News.objects.filter().last()
+        return render(request, self.template_name, context={'news': news})
+
+class CompanyDetailView(View):
+    template_name = 'main/company_info.html'
+
+    def get(self, request):
+        company = get_company_detail()
         affiliate_logger.info(f"Company page")
         return render(request, self.template_name, context={'company': company})
 
@@ -95,28 +106,44 @@ class CouponListView(View):
     template_name = 'main/coupons.html'
 
     def get(self, request):
-        coupon = Coupon.objects.filter(active=True)
-        affiliate_logger.info(f"Coupon page")
+        coupon = list_active_coupons()
+        affiliate_logger.info(f"Active coupon page")
         return render(request, self.template_name, context={'coupon': coupon})
 
 
-class QuestionAnswerListView(View):
-    template_name = 'main/question_answer.html'
+class QuestionListView(View):
+    template_name = 'main/question.html'
 
     def get(self, request):
-        answer = Answer.objects.all()
+        question = Answer.objects.all()
+        affiliate_logger.info(f"Question page")
+        return render(request, self.template_name, context={'question': question})
+
+
+class AnswerDetailView(View):
+    template_name = 'main/answer.html'
+
+    def get(self, request, pk):
+        answer = get_answer(id=pk)
         affiliate_logger.info(f"Answer page")
         return render(request, self.template_name, context={'answer': answer})
-
 
 class NewsListView(View):
     template_name = 'main/news.html'
 
     def get(self, request):
-        news = News.objects.all()
+        news = list_news()
         affiliate_logger.info(f"News page")
         return render(request, self.template_name, context={'news': news})
 
+
+class NewsDeailView(View):
+    template_name = 'main/news_detail.html'
+
+    def get(self, request, pk):
+        news = get_news(pk)
+        affiliate_logger.info(f"News page")
+        return render(request, self.template_name, context={'news': news})
 
 class VacnacyListView(View):
     template_name = 'main/vacancy.html'
@@ -136,13 +163,42 @@ class FeedbackListView(View):
         return render(request, self.template_name, context={'feedbacks': feedbacks})
 
 
+class InsuranceCatalogDetailView(View):
+    template_name = 'main/insurance_catalog_detail.html'
+
+    def get(self, request, pk):
+        insurance_risk_list = []
+        insurance = InsuranceType.objects.get(id=pk)
+        insurance_object_list = InsuranceObject.objects.filter(insurance_type=insurance)
+        for i in insurance_object_list:
+            insurance_risk = InsuranceRisk.objects.get(insurance_object=i)
+            insurance_risk_list.append(insurance_risk)
+        affiliate_logger.info(f"Insurance list page")
+        print(insurance_object_list[0].insurance_objects.all())
+        return render(request, self.template_name, 
+            context={
+                "insurance": insurance,
+                "insurance_object_list": insurance_object_list,
+                "insurance_risk_list": insurance_risk_list,
+            }
+        )
+
 class InsuranceListView(View):
-    template_name = 'main/insurance.html'
+    template_name = 'main/insurance_catalog.html'
 
     def get(self, request):
         insurance = incurance_list()
         affiliate_logger.info(f"Insurance list page")
         return render(request, self.template_name, context={"insurance": insurance})
+
+    def post(self, request):
+        insurance_type = request.POST.get('insurance_type')
+        if insurance_type:
+            insurance = InsuranceType.objects.filter(name=insurance_type)
+            return render(request, self.template_name, {'insurance': insurance})
+        else:
+            insurance_list = incurance_list()
+        return render(request, self.template_name, {'insurance': insurance_list})
 
 class AffiliateListView(View):
     template_name = 'main/affiliate_info.html'
@@ -152,6 +208,13 @@ class AffiliateListView(View):
         affiliate_logger.info(f"Affiliate list page")
         return render(request, self.template_name, context={"affiliate": affiliate})
 
+class AffiliateEmployeeView(View):
+    template_name = 'main/affiliate_employee.html'
+
+    def get(self, request, pk):
+        affiliate = list_affiliate_employee(pk)
+        affiliate_logger.info(f"Affiliate agent list page")
+        return render(request, self.template_name, context={"affiliate": affiliate})
 
 @method_decorator(agent_required, name='dispatch')
 class PolicyCreateView(View):
@@ -260,12 +323,10 @@ class SearchContractsView(View):
                 Q(client__user__last_name__contains=searched),
                 status=2,
                 affiliate=agent.affiliate
-
             )
             return render(request, self.template_search_name, {"searched": searched, "contracts": contracts})
         else:
             return render(request, self.template_name, {})
-
 
 
 @method_decorator(client_required, name='dispatch')
@@ -280,7 +341,7 @@ class ClientContractListView(View):
             affiliate_logger.info(f"Client contract list: {request.user}")
             return render(request, self.template_name, {'contracts': contracts})
         except Exception:
-           return render(request, self.template_name)
+            return render(request, self.template_name)
 
 
 @method_decorator(client_required, name='dispatch')
@@ -322,8 +383,7 @@ class CompanyStatisticsView(View):
         client_median = client_age_median()
         client_mean = client_age_mean()
         client_mode = client_age_mode()
-        # plot_policy_sale()
-        # policy_month_sale()
+
         return render(
             request, 
             self.template_name, 
@@ -342,15 +402,6 @@ class CompanyPolicyChartDetailView(View):
     def get(self, request, pk):
         policy_sale_image = plot_policy_sale()
         return render(request, self.template_name, {'policy_sale_image': policy_sale_image})
-
-# @method_decorator(superuser_required, name='dispatch')
-# class CompanyPolicyMonthChartDetailView(View):
-#     template_name = "statistics/policy_sale_statistics.html"
-
-#     def get(self, request, pk):
-#         policy_month_image = policy_month_sale()
-#         return render(request, self.template_name, {'policy_month_image': policy_month_image})
-        
 
 class CatFactView(View):
     template_name = 'main/cat_fact.html'

@@ -23,7 +23,7 @@ def client_register(data) -> Client:
 
 
 def client_update(pk: int, data, profile_image) -> Client:
-    client: Client = get_object(Client, user__id=pk)
+    client = get_object(Client, user__id=pk)
     client.address = data.get('address')
     client.phone = data.get('phone')
     client.user.gender = data.get('gender')
@@ -38,7 +38,7 @@ def client_update(pk: int, data, profile_image) -> Client:
     return client
 
 def agent_update(pk: int, data, profile_image) -> Agent:
-    agent: Agent = get_object(Agent, user__id=pk)
+    agent = get_object(Agent, user__id=pk)
     agent.user.gender = data.get('gender')
     agent.user.first_name = data.get('first_name')
     agent.user.last_name = data.get('last_name')
@@ -65,7 +65,7 @@ def feedback_create(pk: int, data) -> Feedback:
     return obj
 
 def balance_update(pk: int, balance: float) -> Client:
-    client: Client = get_object(Client, user__id=pk)
+    client = get_object(Client, user__id=pk)
     client.balance += float(balance)
 
     client.save()

@@ -3,6 +3,7 @@ from apps.users.models import Agent, Client, Affiliate
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
+from PIL import Image
 
 
 class BaseModel(models.Model):
@@ -15,6 +16,8 @@ class BaseModel(models.Model):
 
 class Company(models.Model):
     information = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    company_history = models.CharField(max_length=255, default=None)
 
     class Meta:
         verbose_name = "company"
@@ -23,6 +26,16 @@ class Company(models.Model):
     def __str__(self):
         return f"Company: {self.information[:10]}"
 
+class CompanyPartners(models.Model):
+    information = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
+
+    class Meta:
+        verbose_name = "company"
+        verbose_name_plural = "Companies"
+
+    def __str__(self):
+        return f"Company: {self.information[:10]}"
 
 class Contacts(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.DO_NOTHING)
@@ -35,7 +48,7 @@ class Contacts(models.Model):
     def __str__(self):
         return f"Company: {self.description[:10]}"
 
-class Question(models.Model):
+class Question(BaseModel):
     text = models.TextField()
 
     class Meta:
@@ -45,9 +58,9 @@ class Question(models.Model):
     def __str__(self):
         return f"Question: {self.text}"
 
-class Answer(models.Model):
+class Answer(BaseModel):
     text = models.TextField()
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
 
     class Meta:
         verbose_name = "answer"
@@ -68,11 +81,15 @@ class PrivacyPolicy(models.Model):
 
 
 class InsuranceType(models.Model):
-    type = models.PositiveSmallIntegerField(max_length=20, choices=(
-        (10, 'Medical Insuracne'),
-        (20, 'House Insuracne'),
-        (30, 'Car'),
-    ))
+    class Insurance(models.TextChoices):
+        MEDICAL = "Medical Insurance", "MI"
+        AUTO = "Auto Insurance", "AI"
+        HOME = "Home Insurance", "HI"
+        LIFE = "Life Insurance", "LI"
+        TRAVEL = "Travel Insurance", "TI"
+        BUSINESS = "Business Insurance", "BI"
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
+    name = models.CharField(max_length=255, null=False)
     description = models.TextField()
 
     class Meta:
@@ -80,12 +97,13 @@ class InsuranceType(models.Model):
         verbose_name_plural = "insurance"
 
     def __str__(self):
-        return f"{self.type} insurance object"
+        return f"{self.name}"
 
 
 class InsuranceObject(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
+    insurance_type = models.ForeignKey(InsuranceType, on_delete=models.CASCADE, default=None)
 
     class Meta:
         verbose_name = "object"
@@ -96,7 +114,7 @@ class InsuranceObject(models.Model):
 
 
 class InsuranceRisk(models.Model):
-    insurance_object = models.ForeignKey(InsuranceObject, on_delete=models.CASCADE)
+    insurance_object = models.ForeignKey(InsuranceObject, on_delete=models.CASCADE, related_name="insurance_objects")
     name = models.CharField(max_length=255)
     description = models.TextField()
 
@@ -111,6 +129,11 @@ class InsuranceRisk(models.Model):
 
 
 class Contract(models.Model):
+    class StatusType(models.IntegerChoices):
+        CREATED = 1, "Created"
+        SIGNED = 2, "Signed"
+        CONFIRMED = 3, "Confirmed"
+        COMPLETED = 4, "Completed"
     
     client = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
     affiliate = models.ForeignKey(Affiliate, on_delete=models.DO_NOTHING)
@@ -118,14 +141,7 @@ class Contract(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     insurance_object = models.ForeignKey(InsuranceObject, on_delete=models.DO_NOTHING)
     insurance_risk = models.ManyToManyField(InsuranceRisk)
-    status = models.PositiveSmallIntegerField(max_length=20, choices=(
-        (1, 'Created'),
-        (2, 'Signed'),
-        (3, 'Confirmed'),
-        (4, 'Completed'),
-    ))
-
-
+    status = models.PositiveSmallIntegerField(choices=StatusType.choices, default=StatusType.CREATED)
     class Meta:
         verbose_name = "contract"
         verbose_name_plural = "contracts"
@@ -150,6 +166,7 @@ class Policy(BaseModel):
 class News(BaseModel):
     title = models.CharField(max_length=200)
     content = models.TextField()
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
 
     class Meta:
         verbose_name = "news"
@@ -157,6 +174,15 @@ class News(BaseModel):
 
     def __str__(self):
         return f"News: {self.title}"
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            img = Image.open(self.image.path)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
 
 
 class Vacancy(BaseModel):

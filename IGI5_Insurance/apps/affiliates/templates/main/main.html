@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+{% block title %}Coupons {% endblock title %}
+{% load static %}
+
+{% block content %}
+    <ul>
+        <h1>It's main!</h1>
+    </ul>
+    <h1>Last news</h1>
+        {% if news.image%}
+            <img src="{{ news.image.url}}"alt="..." />
+        {% endif %}
+
+        <p>Title: {{ news.title }}</p>
+        <p>Description: {{ news.content | safe | truncatewords:"50"|linebreaks }}</p> 
+        <p>Created at: {{ news.created_at }}</p>
+        
+        {% if news.content|length > 50 %}  
+            <a href="{% url 'news_detail' news.id %}">Read More</a>
+        {% endif %}
+    <hr>
+    <h1>Our partners</h1>
+    <a href="https://www.w3schools.com/html/tryit.asp?filename=tryhtml_links_image"><img src="{% static 'images/EPAM.png' %}" style="width:500px;height:250px;"></img></a>
+    <h1>ADS Banners</h1>
+    <img src="{% static 'images/affiliate.jpg' %}" style="width:500px;height:250px;"></img>
+    <img src="{% static 'images/affiliate1.jpg' %}" style="width:500px;height:250px;"></img>
+{% endblock content %}

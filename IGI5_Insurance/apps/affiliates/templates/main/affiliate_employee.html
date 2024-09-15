@@ -1,0 +1,17 @@
+{% extends "main/base.html" %}
+{% block header %}Affiliate agent list{% endblock header %}
+
+{% block content %}
+    <ul>
+        {% for item in affiliate %}
+            <p>First Name: {{ item.user.first_name }}</p>
+            <p>Last Name: {{ item.user.last_name }}</p>
+            <p>Email: {{ item.user.email }}</p>
+            {% if item.user.profile_image %}
+                <img src="{{ item.user.profile_image.url}}" alt="..." />
+            {% endif %}
+            <hr>
+        {% endfor %}
+    </ul>
+{% endblock content %}
+

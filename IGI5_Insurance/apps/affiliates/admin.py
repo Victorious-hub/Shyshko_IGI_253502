@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from .models import (
-    Answer, 
+    Answer,
+    CompanyPartners, 
     Contacts, 
     Coupon, 
     InsuranceType, 
@@ -13,8 +14,16 @@ from .models import (
     Agent, 
     PrivacyPolicy, 
     Question, 
-    Vacancy
+    Vacancy,
+    Company
 )
+
+@admin.register(Company)
+class ContractAdmin(admin.ModelAdmin):
+    list_display = ('id', 'information',)
+    list_display_links = ('information',)
+    list_filter = ('information',)
+    empty_value_display = "undefined"
 
 @admin.register(Contract)
 class ContractAdmin(admin.ModelAdmin):
@@ -65,3 +74,4 @@ admin.site.register(InsuranceType)
 admin.site.register(PrivacyPolicy)
 admin.site.register(Contacts)
 admin.site.register(Vacancy)
+admin.site.register(CompanyPartners)

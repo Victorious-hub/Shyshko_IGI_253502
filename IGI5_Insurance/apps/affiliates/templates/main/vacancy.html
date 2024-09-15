@@ -5,11 +5,11 @@
 {% block content %}
     <ul>
         {% for item in vacancies %}
-            <p class="truncate">Title: {{ item.title }}</p>
-            <p class="truncate">Description: {{ item.description }}</p>
-            <p class="truncate">Salary: {{ item.salary }} Byn</p>
-            <p class="truncate">Experience: {{ item.experience }} year(s)</p>
-            <p class="truncate">Created at: {{ item.created_at }}</p>
+            <p>Title: {{ item.title }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Salary: {{ item.salary }} Byn</p>
+            <p>Experience: {{ item.experience }} year(s)</p>
+            <p>Created at: {{ item.created_at }}</p>
             <hr>
         {% endfor %}
     </ul>
