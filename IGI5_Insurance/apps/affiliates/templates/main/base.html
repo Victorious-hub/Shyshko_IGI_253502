@@ -1,111 +1,126 @@
-
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>Main Page</title>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        footer {
+            margin-top: auto;
+            text-align: center;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            margin-right: 10px;
+        }
+    </style>
 </head>
-<style>
-    footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        text-align: center;
-    }
-</style>
 <body>
     <header>
         <hgroup>
-            <h1>Company Name</h1>
+            <img src="{% static 'images/affiliate-marketing.png' %}" alt="Affiliate Marketing" style="width:150px;height:150px;">
+            <h1>Insure everything</h1>
         </hgroup>
     </header>
     <nav>
-        <ul style="display: flex; list-style: none; padding: 0;">
-            {% if request.user.is_authenticated and request.user.is_client == True %}
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'client_profile' user.id%}">Client Profile</a>
-                    </li>
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'insurance_list'%}">Catalog</a>
-                    </li>
-                {% elif request.user.is_authenticated and request.user.is_staff == True and request.user.is_superuser != True%}
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'agent_profile' user.id%}">Agent Profile</a>
-                    </li>
-                {% elif request.user.is_authenticated and request.user.is_superuser == True %}
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'admin:index' %}">Go to admin page</a>
-                    </li>
-                    <li style="margin-right: 10px;">
-                        <a  href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'stat' user.id %}">Check for statistics</a>
-                    </li>
-                {% else %}
-                    <li style="margin-right: 10px;">
-                        <a  href="{% url 'client_register'%}">Register</a>
-                    </li>
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'login'%}">Login</a>
-                    </li>
-                {% endif %}
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'main'%}">Main</a>
+        <ul>
+            {% if request.user.is_authenticated and request.user.is_client %}
+                <li>
+                    <a href="{% url 'client_profile' user.id %}">Client Profile</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'vacancy_list'%}">Check Vacancies</a>
+                <li>
+                    <a href="{% url 'insurance_list' %}">Catalog</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'feedback_list'%}">Check Feedbacks</a>
+            {% elif request.user.is_authenticated and request.user.is_staff and not request.user.is_superuser %}
+                <li>
+                    <a href="{% url 'agent_profile' user.id %}">Agent Profile</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'coupon_list'%}" >Available coupouns</a>
+            {% elif request.user.is_authenticated and request.user.is_superuser %}
+                <li>
+                    <a href="{% url 'admin:index' %}">Go to admin page</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'affiliate_list'%}">Check Affiliates Info</a>
+                <li>
+                    <a href="{% url 'logout' %}">Logout</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'question_list'%}">Question answers</a>
+                <li>
+                    <a href="{% url 'stat' user.id %}">Check for statistics</a>
                 </li>
-                {% if request.user.is_authenticated %}
-                    <li style="margin-right: 10px;">
-                        <a href="{% url 'age_predict'%}">Predict age</a>
-                    </li>
-                {% endif %}
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'cat_fact'%}">Cat fact</a>
+            {% else %}
+                <li>
+                    <a href="{% url 'client_register' %}">Register</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'company_info'%}">About company</a>
+                <li>
+                    <a href="{% url 'login' %}">Login</a>
                 </li>
-                <li style="margin-right: 10px;">
-                    <a href="{% url 'news_list'%}">News</a>
+            {% endif %}
+            <li>
+                <a href="{% url 'main' %}">Main</a>
+            </li>
+            <li>
+                <a href="{% url 'vacancy_list' %}">Check Vacancies</a>
+            </li>
+            <li>
+                <a href="{% url 'feedback_list' %}">Check Feedbacks</a>
+            </li>
+            <li>
+                <a href="{% url 'coupon_list' %}">Available coupons</a>
+            </li>
+            <li>
+                <a href="{% url 'affiliate_list' %}">Affiliate contacts</a>
+            </li>
+            <li>
+                <a href="{% url 'question_list' %}">Question answers</a>
+            </li>
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'age_predict' %}">Predict age</a>
                 </li>
-            </ul>
+            {% endif %}
+            <li>
+                <a href="{% url 'cat_fact' %}">Cat fact</a>
+            </li>
+            <li>
+                <a href="{% url 'company_info' %}">About company</a>
+            </li>
+            <li>
+                <a href="{% url 'news_list' %}">News</a>
+            </li>
+            <li>
+                <a href="{% url 'privacy' %}">Privacy</a>
+            </li>
+            <li>
+                <a href="{% url 'sandbox' %}" download="sandbox.html">Sandbox</a>
+            </li>
         </ul>
     </nav>
 
     <main>
+        <h1>
+            {% block header %}{% endblock header %}
+        </h1>
         <section>
-            <h1>
-                {% block header %}{% endblock header %}
-            </h1>
-            <section>
-                {% block content%}{% endblock content %}
-            </section>
+            <article>
+                {% block content %}{% endblock content %}
+            </article>
         </section>
     </main>
 
     <footer>
-        <span>Powered by Victor Shyshko. All rights reserverd. 2024</span>
-        <ul style="list-style: none; padding: 0;">  <li><a href="https://github.com/Victorious-hub">Github repo</a></li>
+        <span>Powered by Victor Shyshko. All rights reserved. 2024</span>
+        <ul style="list-style: none; padding: 0;">
+            <li><a href="https://github.com/Victorious-hub">Github repo</a></li>
             <li><a href="https://www.linkedin.com/in/victor-shyshko-205a04274/">LinkedIn repo</a></li>
         </ul>
-        <p>Privacy Policy: Your privacy is important to us. We do not share your personal information with third parties.</p>
+        <address>Privacy Policy: Your privacy is important to us. We do not share your personal information with third parties.</address>
     </footer>
 </body>
 </html>

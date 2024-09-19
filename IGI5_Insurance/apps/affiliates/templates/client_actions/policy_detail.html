@@ -2,24 +2,20 @@
 {% block title %}Client Profile{% endblock title %}
 
 {% block content %}
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-body">
-                <h1 class="card-title">Your policy</h1>
-                <ul>
-                    <li class="truncate">Agent first name: {{ policy.agent.user.first_name }}</li>
-                    <li class="truncate">Agent last name: {{ policy.agent.user.last_name }}</li>
-                    <li class="truncate">Agent affiliate: {{ policy.agent.affiliate }}</li>
-                </ul>
-                <ul>
-                    <li class="truncate">Contract: {{ policy.contract }}</li>
-                </ul>
-                <p class="truncate">Insurance sum: {{ policy.insurance_sum }}</p>
-                <p class="truncate">Price: {{ policy.price }}</p>
-                <p class="truncate">Start date: {{ policy.start_date }}</p>
-                <p class="truncate">End date: {{ policy.end_date }}</p>
-                <hr>
-            </div>
-        </div>
+    <div>
+        <h1>Your policy</h1>
+        <ul>
+            <li>Agent first name: {{ policy.agent.user.first_name }}</li>
+            <li>Agent last name: {{ policy.agent.user.last_name }}</li>
+            <li>Agent affiliate: {{ policy.agent.affiliate }}</li>
+        </ul>
+        <ul>
+            <li>Contract: {{ policy.contract }}</li>
+        </ul>
+        <p>Insurance sum: {{ policy.insurance_sum }}</p>
+        <p>Price: {{ policy.price }}</p>
+        <p>Start date: {{ policy.start_date }}</p>
+        <p>End date: {{ policy.end_date }}</p>
+        <hr>
     </div>
 {% endblock content %}

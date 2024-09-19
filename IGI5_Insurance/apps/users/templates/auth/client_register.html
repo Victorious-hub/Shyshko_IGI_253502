@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-  <div>
+    <div>
     {% if messages %}
         <div>
             {% for message in messages %}
@@ -30,7 +30,7 @@
         <input type="submit" value="Submit" />
     </form>
     <div>
-      <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-      <p>Go to main <a href="{% url 'main' %}">Main</a></p>
-  </div>
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    <p>Go to main <a href="{% url 'main' %}">Main</a></p>
+</div>
 {% endblock content %}

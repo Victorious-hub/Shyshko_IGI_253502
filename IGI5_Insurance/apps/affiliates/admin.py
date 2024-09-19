@@ -11,8 +11,6 @@ from .models import (
     Contract, 
     News, 
     Policy, 
-    Agent, 
-    PrivacyPolicy, 
     Question, 
     Vacancy,
     Company
@@ -71,7 +69,6 @@ admin.site.register(InsuranceObject)
 admin.site.register(InsuranceRisk)
 admin.site.register(InsuranceType)
 
-admin.site.register(PrivacyPolicy)
 admin.site.register(Contacts)
 admin.site.register(Vacancy)
 admin.site.register(CompanyPartners)

@@ -1,23 +1,8 @@
+{% extends "main/base.html" %}
+{% block title %}Coupons{% endblock title %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Profile</title>
-  </head>
-  <style>
-    footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        text-align: center;
-    }
-</style>
 
-  <body>
-    <header></header>
+{% block content %}
     <nav>
       <div>
           <ul style="display: flex; list-style: none; padding: 0;">
@@ -26,9 +11,6 @@
             </li>
             <li style="margin-right: 10px;">
               <a  href="{% url 'balance_create' user.id%}">Fill your balance</a>
-            </li>
-            <li style="margin-right: 10px;">
-              <a href="{% url 'client_profile' user.id%}">Your profile</a>
             </li>
             <li style="margin-right: 10px;">
               <a  href="{% url 'logout' %}">Logout</a>
@@ -49,27 +31,11 @@
       </div>
   </nav>
 
-  <main>
-    <section>
-        <h1>
-            {% block header %}{% endblock header %}
-        </h1>
-        <section>
-            {% block content%}{% endblock content %}
-        </section>
-    </section>
-  </main>
+  <section>
+      {% block content1 %}{% endblock content1 %}
+  </section>
 
-  <footer>
-      <span>Powered by Victor Shyshko. All rights reserverd. 2024</span>
-      <ul style="list-style: none; padding: 0;">  <li><a href="https://github.com/Victorious-hub">Github repo</a></li>
-          <li><a href="https://www.linkedin.com/in/victor-shyshko-205a04274/">LinkedIn repo</a></li>
-      </ul>
-      <p>Privacy Policy: Your privacy is important to us. We do not share your personal information with third parties.</p>
-  </footer>
-
-  </body>
   <script type="text/javascript">
     document.cookie = 'timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
   </script>
-</html>
+{% endblock content %}

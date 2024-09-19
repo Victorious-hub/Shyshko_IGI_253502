@@ -4,8 +4,23 @@
 {% block content %}
 <ul>
     {% for item in company %}
-        <p>Company information: {{ item.information }}</p>
+    <blockquote>
+        <p>{{ item.information }}</p>
+        <p>Our history: {{ item.history }}</p>
+    </blockquote>
     {% endfor %}
     <iframe width="560" height="315" src="https://www.youtube.com/embed/4TQj6fbq0oI?si=zbuwfncRV7A_zgoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </ul>
+
+<h2>Certificate of Affiliate</h2>
+    <p>
+        <h3>Affiliate</h3><br>
+        <i>This is to certify that</i><br>
+        <em>has been recognized for its commitment to providing high-quality affiliate dealings</em><br>
+        <p>Issued on: <strong>September 18, 2024</strong></p>.
+    </p>
+
+    <p><strong>Id: 432423019</strong></p>
+    <p>Name: Victor Shyshko</p>
+    <p>Title: CEO affiliate company</p>
 {% endblock content %}

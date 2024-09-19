@@ -1,7 +1,7 @@
 {% extends "clients/client_base.html" %}
 {% block title %}Client Profile{% endblock title %}
 
-{% block content %}
+{% block content1 %}
     <div>
         {% if messages %}
             <div>
@@ -14,7 +14,7 @@
         {% endif %}
         <form method="POST" action="{% url 'balance_create' user.id%}">
         {% csrf_token %}
-        <h1>Create Account</h1>
+        <h1>Increase balance</h1>
         {% for field in form %}
             <div>
                 {{ field.label_tag }}
@@ -29,4 +29,4 @@
         <input type="submit" value="Submit" />
     </form>
     </div>
-{% endblock content %}
+{% endblock content1 %}

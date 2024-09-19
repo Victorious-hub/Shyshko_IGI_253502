@@ -10,7 +10,7 @@ from apps.users.models import Agent
 from apps.users.utils import get_object
 
 from .decorators import agent_required, client_required, superuser_required
-from .models import Answer, Company, Contract, Coupon, InsuranceObject, InsuranceRisk, InsuranceType, News, Question
+from .models import Answer, Company, CompanyPartners, Contract, Coupon, InsuranceObject, InsuranceRisk, InsuranceType, News, Question
 from .forms import ContractForm, PolicyForm
 from django.views.generic import TemplateView
 from django.utils.decorators import method_decorator
@@ -92,7 +92,8 @@ class MainView(View):
 
     def get(self, request):
         news = News.objects.filter().last()
-        return render(request, self.template_name, context={'news': news})
+        company_partners = CompanyPartners.objects.all()
+        return render(request, self.template_name, context={'news': news, 'company_partners': company_partners})
 
 class CompanyDetailView(View):
     template_name = 'main/company_info.html'
@@ -101,6 +102,9 @@ class CompanyDetailView(View):
         company = get_company_detail()
         affiliate_logger.info(f"Company page")
         return render(request, self.template_name, context={'company': company})
+
+class PrivacyPolicyDetailView(TemplateView):
+    template_name = 'main/privacy.html'
 
 class CouponListView(View):
     template_name = 'main/coupons.html'
@@ -153,6 +157,8 @@ class VacnacyListView(View):
         affiliate_logger.info(f"Vacancy list page")
         return render(request, self.template_name, context={'vacancies': vacancies})
 
+class SandboxView(TemplateView):
+    template_name = 'main/sandbox.html'
 
 class FeedbackListView(View):
     template_name = 'main/feedback.html'
@@ -171,10 +177,9 @@ class InsuranceCatalogDetailView(View):
         insurance = InsuranceType.objects.get(id=pk)
         insurance_object_list = InsuranceObject.objects.filter(insurance_type=insurance)
         for i in insurance_object_list:
-            insurance_risk = InsuranceRisk.objects.get(insurance_object=i)
+            insurance_risk = InsuranceRisk.objects.filter(insurance_object=i)
             insurance_risk_list.append(insurance_risk)
         affiliate_logger.info(f"Insurance list page")
-        print(insurance_object_list[0].insurance_objects.all())
         return render(request, self.template_name, 
             context={
                 "insurance": insurance,
@@ -307,27 +312,57 @@ class ContractSignView(View):
         return render(request, self.template_name)
     
     
+from django.shortcuts import get_object_or_404, render
+
 @method_decorator(agent_required, name='dispatch')
 class SearchContractsView(View):
     model = Contract
-    template_search_name = "agent_actions/affiliate_contracts_searched.html"
-    template_name = 'agent_actions/affiliate_contracts.html'
+
+    def get_template_name(self):
+        if self.request.method == 'POST':
+            return "agent_actions/affiliate_contracts_sorted.html"
+        return 'agent_actions/affiliate_contracts.html'
 
     def post(self, request, pk):
         searched = request.POST["searched"]
-        agent: Agent = get_object(Agent, user__id=pk)
-        if len(searched) != 0:
-            contracts = self.model.objects.filter(
-                Q(client__user__email__contains=searched) | 
-                Q(client__user__first_name__contains=searched) | 
-                Q(client__user__last_name__contains=searched),
-                status=2,
-                affiliate=agent.affiliate
-            )
-            return render(request, self.template_search_name, {"searched": searched, "contracts": contracts})
-        else:
-            return render(request, self.template_name, {})
+        sort_value = request.POST["sort_value"]
+        asc_desc = request.POST["asc_desc"]
 
+        agent = get_object_or_404(Agent, user__id=pk)
+        contracts_query = self.model.objects.filter(
+            affiliate=agent.affiliate,
+            status=2,
+        )
+
+        if len(searched) != 0:
+            contracts_query = contracts_query.filter(
+                Q(client__user__email__icontains=searched) |
+                Q(client__user__first_name__icontains=searched) |
+                Q(client__user__last_name__icontains=searched)
+            )
+        print(asc_desc)
+        if asc_desc == "asc":
+            contracts = contracts_query.order_by(f"client__user__{sort_value}")
+        else:
+            contracts = contracts_query.order_by(f"-client__user__{sort_value}")
+        return render(request, self.get_template_name(), {"searched": searched, "contracts": contracts})
+
+
+@method_decorator(agent_required, name='dispatch')
+class SortContractsView(View):
+    model = Contract
+    template_search_name = "agent_actions/affiliate_contracts_sorted.html"
+    template_name = 'agent_actions/affiliate_contracts.html'
+
+    def post(self, request, pk):
+        sort_value = request.POST["sort_value"]
+        asc_desc = request.POST["asc_desc"]
+        agent: Agent = get_object(Agent, user__id=pk)
+        if asc_desc == "asc":
+            contracts = self.model.objects.filter(affiliate=agent.affiliate).order_by(f"client__user__{sort_value}")
+        else:
+            contracts = self.model.objects.filter(affiliate=agent.affiliate).order_by(f"-client__user__{sort_value}")
+        return render(request, self.template_search_name, {"sort_value": sort_value, "contracts": contracts})
 
 @method_decorator(client_required, name='dispatch')
 class ClientContractListView(View):

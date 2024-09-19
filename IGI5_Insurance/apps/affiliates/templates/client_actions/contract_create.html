@@ -2,16 +2,16 @@
 {% block title %}Client Profile{% endblock title %}
 
 {% block content %}
-<div class="container">  
+<div>  
     <form method="POST" action="{% url 'contract_create' user.id%}">
         {% csrf_token %}
         <h1>Create Contract</h1>
         {% for field in form %}
-            <div class="form-group">
+            <div>
                 {{ field.label_tag }}
                 {{ field }}
                 {% if field.errors %}
-                    <div class="invalid-feedback d-inline-block ml-2">
+                    <div>
                         {{ field.errors|first }}
                     </div>
                 {% endif %}
@@ -23,30 +23,28 @@
 </div>
 
 <style>
-    /* Add styles to your CSS file or within this block */
     .container {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 50vh;  /* Optional: Set minimum height for full viewport centering */
+        min-height: 50vh;
     }
 
     .form-wrapper {
-        background-color: #fff;  /* Optional: Set background color */
+        background-color: #fff;
         padding: 20px;
         border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Optional: Add a subtle shadow */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .form-group {
         margin-bottom: 35px;
     }
 
-    .form-control {  /* Assuming you're using Bootstrap classes for fields */
-        width: 100%;  /* Increase field width */
+    .form-control {
+        width: 100%;
         padding: 10px;
-        font-size: 16px;  /* Optional: Increase font size */
+        font-size: 16px;
     }
-
 </style>
 {% endblock content %}

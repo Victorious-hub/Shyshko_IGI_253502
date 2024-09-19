@@ -5,12 +5,14 @@
 {% block content %}
     <ul>
         {% for item in vacancies %}
-            <p>Title: {{ item.title }}</p>
-            <p>Description: {{ item.description }}</p>
-            <p>Salary: {{ item.salary }} Byn</p>
-            <p>Experience: {{ item.experience }} year(s)</p>
-            <p>Created at: {{ item.created_at }}</p>
+            <fieldset>
+                <legend>{{ item.title }}</legend>
+                <p><strong>Description:</strong> {{ item.description }}</p>
+                <p><strong>Salary:</strong> {{ item.salary }} Byn</p>
+                <p><strong>Experience:</strong> {{ item.experience }} year(s)</p>
+                <p><strong>Created at:</strong> {{ item.created_at }}</p>
+            </fieldset>
             <hr>
         {% endfor %}
-    </ul>
+    </ul>    
 {% endblock content %}

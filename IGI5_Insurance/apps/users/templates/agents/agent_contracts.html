@@ -2,7 +2,7 @@
 {% block title %}Agent contracts{% endblock title %}
 {% block header %}Agent contracts{% endblock header %}
 
-{% block content %}
+{% block content1 %}
     <ul>
         {% for item in contracts %}
             <p>Client: {{ item.contract.client }}</p>
@@ -13,4 +13,4 @@
             <hr>
         {% endfor %}
     </ul>
-{% endblock content %}
+{% endblock content1 %}

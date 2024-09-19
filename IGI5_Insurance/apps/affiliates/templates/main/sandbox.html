@@ -3,15 +3,26 @@
 <html>
 <head>
     <title>Sample of HTML</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрационная страница с расширенной функциональностью</title>
+    <link rel="icon" href="favicon.ico"> 
+    <meta name="description" content="Это описание страницы для поисковых систем.">
+    <meta name="keywords" content="HTML, CSS, JavaScript, веб-разработка">
 </head>
 <style>
     .highlight {
         background-color: yellow;
     }
+    img {
+            max-width: 100%;
+            height: auto;
+        }
 </style>
 <body>
     <header>
         <h1>Мой веб-сайт</h1>
+        <u>e</u>
         <nav>
             <ul>
                 <li><a href="#">Главная</a></li>
@@ -38,6 +49,7 @@
                 <summary>Дополнительные детали</summary>
                 <p>Скрытый контент.</p>
             </details>
+
         </section>
             <h1>Text h1</h1>
             <h2>Text h2</h2>
@@ -51,7 +63,6 @@
             <hr>
 
             <!--Форматирование-->
-
             <abbr>HTML</abbr>
             <address>My phone number: +3752951111111</address>
             <b>sub-bold text</b>
@@ -69,6 +80,9 @@
             
             <p>Этот текст <em>подчеркнут</em>.</p>
 
+            Самое длинное слово из химии:<br>
+            метоксихлор<wbr>диэтиламино<wbr>метил<wbr>бутил<wbr>амино<wbr>акридин
+
             <p><ins>Этот текст был добавлен позже.</ins></p>
             <p>Чтобы сохранить файл, нажмите <kbd>Ctrl+S</kbd>.</p>
             <p><mark>Этот текст выделен, как будто его выбрали.</mark></p>
@@ -82,7 +96,7 @@
             <ruby>漢<rt>かん</rt></ruby> <p><s>Это утверждение было ошибочным.</s></p>
             <p>Выход программы: <samp>Результат операции: 123</samp></p>
             <p>Это <small>мелкий</small> текст.</p>
-
+            <b>some data</b>
             <p>Это <var>x</var> и <var>y</var> - это две переменные.</p>
             <p>Сегодня <time datetime="2023-11-28">28 ноября 2023</time> года.</p>
             <p>Этот текст <u>подчеркнут</u> для выделения.</p>
@@ -101,11 +115,8 @@
 
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email"><br>
-
                         <label for="password">Пароль:</label>   
-
                         <input type="password" id="password" name="password"><br>   
-
 
                         <label for="number">Число:</label>
                         <input type="number" id="number" name="number"><br>
@@ -155,7 +166,6 @@
                 </fieldset>
                 <fieldset>
                     <legend>Предпочтения</legend>
-
                     <label>Любимый цвет:</label>
                     <select name="colors">
                         <optgroup label="Холодные цвета">
@@ -173,6 +183,15 @@
                 <button type="submit">Отправить</button>
             </form>
 
+            <form enctype="multipart/form-data" method="post" action="http://localhost:8080/postfile.php">
+                <p>
+                    <input type="file" name="file" />
+                </p>
+                <p>
+                    <input type="submit" value="Отправить" />
+                </p>
+            </form>
+
             <datalist id="cars">
                 <option value="Volvo">
                 <option value="Saab">
@@ -186,7 +205,7 @@
             <figure>
                 <img src="ads.jpg" alt="Описание изображения">
                 <figcaption>Мое прекрасное изображение</figcaption>
-                </figure>
+            </figure>
                 
                 <img src="ads.jpg" alt="Карта" usemap="#image-map">
                 <map name="image-map">
@@ -200,15 +219,12 @@
                     const ctx = canvas.getContext('2d');   
                 
                     ctx.fillStyle = 'blue';
-                    ctx.fillRect(0,   
-                0, 100, 50);
+                    ctx.fillRect(0, 0, 100, 50);
                 </script>
-                
                 <picture>
-                    <source media="(min-width: 600px)" srcset="large.jpg">
-                    <source media="(min-width: 400px)" srcset="medium.jpg">
-                    <img src="small.jpg" alt="Изображение">   
-                
+                    <source media="(min-width: 600px)" srcset="ads.jpg">
+                    <source media="(min-width: 400px)" srcset="ads.jpg">
+                    <img src="ads.jpg" alt="Изображение">   
                 </picture>
                 
                 <svg width="200" height="100">
@@ -311,7 +327,6 @@
         </noscript>
         
         <embed src="document.pdf" type="application/pdf" width="500" height="300">
-        
         <object data="video.mp4" type="video/mp4" width="320" height="240">
             <param name="autoplay" value="true">
         </object>
@@ -325,8 +340,104 @@
         <p>Это содержимое диалогового окна.</p>
     </dialog>
     <button onclick="document.getElementById('myDialog').showModal()">Открыть диалог</button>
-    
+
     <p>Сегодня <time datetime="2023-11-22">22 ноября 2023</time>.</p>
+    <h1>Демонстрационная страница</h1>
+
+    <h2>Листинг кода</h2>
+    <pre><code>
+        function greet(name) {
+            console.log("Hello, " + name + "!");
+        }
+    </code></pre>
+
+    <p>HTML (HyperText Markup Language) - язык разметки гипертекста.</p>
+    <p>CSS (Cascading Style Sheets) - язык описания стилей для веб-страниц.</p>
+    <blockquote>
+        "Любой дурак может написать код, который компьютер поймет. Хороший программист пишет код, который поймут другие программисты." - Мартин Фаулер
+    </blockquote>
+
+    <p>Сегодня: <span id="date"></span></p>
+    <script>
+        document.getElementById("date").textContent = new Date().toLocaleDateString();
+    </script>
+    <a href="https://www.example.com">Ссылка на внешний сайт</a>
+    <a href="ads.jpg" download="ads.jpg">Скачать</a>    <a href="#table">Перейти к таблице</a>
+
+    <div>Это контейнерный элемент</div>
+    <ul>
+        <li>Элемент списка</li>
+        <li>Еще один элемент</li>
+    </ul>
+    <figure>
+        <img src="image.jpg" alt="Описание изображения">
+        <figcaption>Подпись к изображению</figcaption>
+    </figure>
+
+    <nav>
+        <ul>
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">О нас</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <h2 id="table">Таблица данных</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Заголовок 1</th>
+                <th colspan="2">Заголовок 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td headers="col1 col2">Текст</td>
+                <td>Число</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table border="1">
+        <tr>
+            <td rowspan="2">(1,1)</td>
+            <td>(1,2)</td>
+            <td>(1,3)</td>
+        </tr>
+        <tr>
+            <td colspan="2">(2,1)</td>
+        </tr>
+    </table>
+
+    <iframe src="https://www.epam.com/" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>   
+    <img src="adaptive_image.jpg" alt="Адаптивное изображение">
+    <audio controls>
+        <source src="indee.mp4" type="audio/mp4">
+    </audio>
+
+    <aside class="advertising">
+        <h2>Викиум</h2>
+        <a href="https://ad.example.com/?adid=1929&pubid=1422">
+            <section>
+                <h3>Тренажеры для мозга</h3>
+                <p>Какая функция мозга у тебя сильнее?</p>
+            </section>
+        </a>
+    </aside>
+
+    <video width="320" height="240" controls>
+        <source src="indee.mp4" type="video/mp4">
+    </video> 
+
+    <embed src="indee.mp4" width="320" height="240" type="video/mp4">
+
+    <object data="indee.mp4" width="320" height="240" type="video/mp4">
+        <param name="src" value="indee.mp4">
+        <param name="autoplay" value="false">
+        <param name="controls" value="true">
+    </object>
+
 </body>
 <script>
     document.body.style.backgroundColor = "lightblue";

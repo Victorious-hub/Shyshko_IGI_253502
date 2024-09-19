@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,17 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main statistics Page</title>
 </head>
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+</style>
 <body>
+    <header>
+        <hgroup>
+            <img src="{% static 'images/affiliate-marketing.png' %}" style="width:150px;height:150px;"></img>
+            <h1>Insure everything</h1>
+        </hgroup>
+    </header>
+
     <nav>
         <div>
-            <ul>
-                <li>
+            <ul style="display: flex; list-style: none; padding: 0;">
+                <li style="margin-right: 10px;">
                     <a href="{% url 'company_statisctics' user.id%}">Company statistics</a>
                 </li>
-                <li>
+                <li style="margin-right: 10px;">
                     <a href="{% url 'chart_statisctics' user.id%}">Policy sales total</a>
                 </li>
-                <li>
+                <li style="margin-right: 10px;">
                     <a href="{% url 'main' %}">Back to main</a>
                 </li>
             </ul>
@@ -33,5 +49,13 @@
             </section>
         </section>
     </main>
+
+    <footer>
+        <span>Powered by Victor Shyshko. All rights reserverd. 2024</span>
+        <ul style="list-style: none; padding: 0;">  <li><a href="https://github.com/Victorious-hub">Github repo</a></li>
+            <li><a href="https://www.linkedin.com/in/victor-shyshko-205a04274/">LinkedIn repo</a></li>
+        </ul>
+        <p>Privacy Policy: Your privacy is important to us. We do not share your personal information with third parties.</p>
+    </footer>
 </body>
 </html>

@@ -1,31 +1,23 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <div>
-      <div>
-        <div>
-          <h1>Agent Details</h1>
-          <ul>
-              <li>Email: {{ agent.user.email }}</li>
-              <li>First Name: {{ agent.user.first_name }}</li>
-              <li>Last Name: {{ agent.user.last_name }}</li>
+{% extends "agents/agent_base.html" %}
+{% block title %}Agent Profile{% endblock title %}
+{% block header %}Agent Profile{% endblock header %}
 
-              <li>Affiliate name: {{ agent.affiliate.name }}</li>
-              <li>Affiliate address: {{ agent.affiliate.address }}</li>
-              <li>Affiliate phone: {{ agent.affiliate.phone }}</li>
-          </ul>
-          <a href="{% url 'logout' %}">Logout</a>
-          <a href="{% url 'change_password' agent.user.id%}">Change password</a>
-          <a href="{% url 'agent_update' agent.user.id%}">Update Data</a>
-          <a href="{% url 'contract_create' agent.user.id%}">Create Contract</a>
-          <a href="{% url 'agent_contracts' agent.user.id%}">Contract list</a>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+{% block content1 %}
+  <div>
+    <h1>Agent Details</h1>
+    <ul>
+        <li>Email: {{ agent.user.email }}</li>
+        <li>First Name: {{ agent.user.first_name }}</li>
+        <li>Last Name: {{ agent.user.last_name }}</li>
+
+        <li>Affiliate name: {{ agent.affiliate.name }}</li>
+        <li>Affiliate address: {{ agent.affiliate.address }}</li>
+        <li>Affiliate phone: {{ agent.affiliate.phone }}</li>
+    </ul>
+    <a href="{% url 'logout' %}">Logout</a>
+    <a href="{% url 'change_password' agent.user.id%}">Change password</a>
+    <a href="{% url 'agent_update' agent.user.id%}">Update Data</a>
+    <a href="{% url 'contract_create' agent.user.id%}">Create Contract</a>
+    <a href="{% url 'agent_contracts' agent.user.id%}">Contract list</a>
+  </div>
+{% endblock content1 %}

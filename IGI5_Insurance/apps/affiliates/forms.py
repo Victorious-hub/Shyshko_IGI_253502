@@ -9,7 +9,7 @@ class ContractForm(forms.ModelForm):
     
     class Meta:
         model = Contract
-        fields = ('insurance_type', 'affiliate', 'insurance_object', 'insurance_risk',)
+        fields = ('insurance_type', 'affiliate', 'insurance_object', 'insurance_risk', 'guarantee')
     
     # def __init__(self, *args, **kwargs):
     #     insurance = kwargs.get('insurance_type')

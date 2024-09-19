@@ -14,8 +14,8 @@
         {% for it in item.insurance_objects.all %}
             <p>Risk name: {{ it.name }}</p>
             <p>Risk description: {{ it.description }}</p>
-            <a href="{% url 'contract_create' insurance.id%}">Add Contract to cart</a>
         {% endfor %}
     {% endfor %}
+    <a href="{% url 'contract_create' insurance.id%}">Add Contract to cart</a>
     <hr>
 {% endblock content %}

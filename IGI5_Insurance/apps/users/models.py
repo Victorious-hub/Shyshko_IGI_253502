@@ -28,7 +28,6 @@ class Affiliate(models.Model):
     def __str__(self):
         return f"Affiliate: {self.name}"
 
-# здесь можете с нуля user не создавать кста. Есть AbstractUser просто
 class CustomUser(AbstractBaseUser, PermissionsMixin): 
     date_birth = models.DateField(blank=True, null=True)
     email = models.EmailField(max_length=255, unique=True)

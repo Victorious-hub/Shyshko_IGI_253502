@@ -4,9 +4,17 @@
 {% block content %}
     <ul>
         {% for item in coupon %}
-            <p>Code: {{ item.code}}</p>
-            <p>Discount: {{ item.discount }}</p>
-            <hr>
+            {% if item.active %}
+                <strong><u><em>Coupon is active</em></u></strong>
+                <p>Code: {{ item.code }}</p>
+                <p>Discount: {{ item.discount }} %</p>
+                <hr align="left" width="50%" noshade color="green" size="4">
+            {% else %}
+                <strong><u><em>Coupon is in archive</em></u></strong>
+                <p>Code: {{ item.code }}</p>
+                <p>Discount: {{ item.discount }} %</p>
+                <hr align="left" width="50%" noshade color="red" size="4">
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock content %}

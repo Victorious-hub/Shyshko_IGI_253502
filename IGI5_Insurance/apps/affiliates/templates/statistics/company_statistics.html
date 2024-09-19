@@ -4,10 +4,12 @@
 
 {% block content %}
     <h2>All Clients</h2>
-    <table border="1">
+    <table border="1" align="center" bgcolor="yellow" border ="3" bordercolor="blue">
+        <caption>Statistics header</caption>
         <thead>
-            <tr>
-                <th>Email</th>
+            <tr bgcolor="yellow" bordercolor="red">
+                <th>Profile image</th>
+                <th id="email">Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Date of Birth</th>
@@ -20,13 +22,18 @@
         </thead>
         <tbody>
             {% for client in total_clients %}
-            <tr>
-                <td>
+            <colgroup span="2" width="100"></colgroup>
+            <colgroup>
+                <col width="50">
+                <col width="25">
+            </colgroup>
+            <tr bgcolor="yellow" bordercolor="red">
+                <td colspan="2" width="400">
                     {% if client.user.profile_image %}
                         <img src="{{ client.user.profile_image.url}}" class="img1" alt="..." />
                     {% endif %}
                 </td>
-                <td>{{ client.user.email }}</td>
+                <td headers="email">{{ client.user.email }}</td>
                 <td>{{ client.user.first_name }}</td>
                 <td>{{ client.user.last_name }}</td>
                 <td>{{ client.user.date_birth }}</td>
@@ -67,4 +74,9 @@
             </tr>
         </tbody>
     </table>
+    <tfoot>
+        <tr>
+            <td>Footer</td>
+        </tr>
+    </tfoot>
 {% endblock content %}

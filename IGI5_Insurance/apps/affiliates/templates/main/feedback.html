@@ -12,6 +12,11 @@
             <p>Created at: {{ item.created_at }}</p>
             <hr>
         {% endfor %}
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'client_profile' user.id%}">Feedback Create</a>
+        {% else %}
+            <p>Wanna place your feedback? <a href="{% url 'login' %}">Login</a></p>
+        {% endif %}
     </ul>
 {% endblock content %}
 

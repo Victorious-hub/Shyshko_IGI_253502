@@ -50,7 +50,7 @@ def get_client_policy(id: int) -> Policy:
     return policy
 
 def list_active_coupons() -> Coupon:
-    return Coupon.objects.filter(active=True)
+    return Coupon.objects.all()
 
 def get_answer(id: int) -> Answer:
     return Answer.objects.get(id=id)

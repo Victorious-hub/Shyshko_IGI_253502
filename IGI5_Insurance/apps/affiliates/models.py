@@ -17,8 +17,9 @@ class BaseModel(models.Model):
 class Company(models.Model):
     information = models.TextField()
     image = models.ImageField(null=True, blank=True, upload_to="images/")
-    company_history = models.CharField(max_length=255, default=None)
-
+    company_history = models.TextField()
+    company_url = models.URLField(default=None, max_length=255)
+    history = models.JSONField(null=True, default=None)
     class Meta:
         verbose_name = "company"
         verbose_name_plural = "Companies"
@@ -29,6 +30,7 @@ class Company(models.Model):
 class CompanyPartners(models.Model):
     information = models.TextField()
     image = models.ImageField(null=True, blank=True, upload_to="images/")
+    company_url = models.URLField(default=None, max_length=255)
 
     class Meta:
         verbose_name = "company"
@@ -68,16 +70,6 @@ class Answer(BaseModel):
 
     def __str__(self):
         return f"Answer: {self.text}"
-
-class PrivacyPolicy(models.Model):
-    text = models.TextField()
-
-    class Meta:
-        verbose_name = "privacyPolicy"
-        verbose_name_plural = "privacyPolicies"
-
-    def __str__(self):
-        return f"privacyPolicy"
 
 
 class InsuranceType(models.Model):
@@ -138,6 +130,7 @@ class Contract(models.Model):
     client = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
     affiliate = models.ForeignKey(Affiliate, on_delete=models.DO_NOTHING)
     insurance_type = models.ForeignKey(InsuranceType, on_delete=models.DO_NOTHING)
+    guarantee = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     insurance_object = models.ForeignKey(InsuranceObject, on_delete=models.DO_NOTHING)
     insurance_risk = models.ManyToManyField(InsuranceRisk)

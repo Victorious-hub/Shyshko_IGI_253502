@@ -6,10 +6,12 @@
 <ul>
     {% for item in news %}
         {% if item.image%}
-            <img src="{{ item.image.url}}"alt="..." />
+            <figure>
+                <img src="{{ item.image.url}}"alt="..." />
+                <figcaption>Title: {{ item.title }}</figcaption>
+            </figure>
         {% endif %}
 
-        <p>Title: {{ item.title }}</p>
         <p>Description: {{ item.content | safe | truncatewords:"50"|linebreaks }}</p> 
         <p>Created at: {{ item.created_at }}</p>
         
